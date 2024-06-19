@@ -1,0 +1,109 @@
+:root {
+    --pass-outline-color: blue;
+}
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e6f0ff;
+    height: 100vh;
+    width: 100vw;
+}
+
+form {
+    border-radius: 20px;
+    background-color: white;
+    height: 60%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 5px #bfbfbf;
+}
+
+input {
+    height: 40px;
+    border: 0.5px solid #0066ff;
+    border-radius: 10px;
+    width: 55%;
+    font-size: 1.1em;
+    text-indent: 10px;
+    
+}
+
+input:hover {
+    box-shadow: 0 0 2px #0066ff;
+}
+
+input:focus {
+    outline: 2px solid blue;
+}
+
+input#password:focus, input#cpassword:focus {
+    outline: 2px solid var(--pass-outline-color);
+    border-color: var(--pass-outline-color);
+}
+.logintext {
+
+    width: 55%;
+    text-indent: 5px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 3%;
+    color: blue;
+}
+
+#warnings {
+    width: 55%;
+    text-align: 5px;
+    margin-top: 2%;
+    font-size: 12px;
+    color: var(--pass-outline-color);
+    height: 20px;
+}
+
+form > button {
+    width: 150px;
+    height: 50px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px grey;
+    margin-top: 10%;
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    box-shadow: 0 0 3px #bfbfbf;
+    border-radius: 15px;
+    background-color: #0066ff;
+    color: white;
+    font-weight: 1000;
+}
+
+form > button:hover {
+    background-color: blue;
+    box-shadow: 0 0 5px #0000ff;
+}
+
+form#signup {
+    height: 90%;
+}
+
+form#signup > button {
+    width: 200px;
+}
+
+input[type=checkbox] {
+    height: 15px;
+    width: 15px;
+}
+
+div#showpass {
+    width: 55%;
+    font-family: Arial, Helvetica, sans-serif;
+    color: grey;
+}
+
+div#switch {
+    font-family: Arial, Helvetica, sans-serif;
+    color: grey;
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Login- Thapathali Bazar</title>
+        <link rel="icon" type="image/x-icon" href="images/favicon.png">
+        <link rel="stylesheet" href="login.css">
+    </head>
+    <body>
+        <form id="signup">
+            <div class="logintext">Fill in the details</div>
+            <input type="text" placeholder="First Name" required><br/>
+            <input type="text" placeholder="Last Name" required><br/>
+            <input type="email" placeholder="Email" required><br>
+            <input id="password" type="password" placeholder="Password" minlength="8" required>
+            <br>
+            <input  id="cpassword" type="password" placeholder="Confirm Password" minlength="8" required>
+            <div id="warnings"></div>
+            <div id="showpass">
+                <input id="showpasscheck" type="checkbox" value="show password">
+                Show password
+            </div>
+            <button id="signbtn">Create Account</button><br>
+            <div id="switch">Have an account? Login <a href="login.html">here</a></div>
+        </form>
+    </body>
+    <script src="validate.js"></script>
+    <script src="password.js"></script>
+</html>
