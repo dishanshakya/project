@@ -31,6 +31,11 @@ export const orders = [
 		imgSource: 'images/bipul.png',
 		price: 49.99,
 		name: 'Bipul on sale'
+	},
+    {
+		imgSource: 'images/bipul.png',
+		price: 49.99,
+		name: 'Bipul on sale'
 	}
     
 
