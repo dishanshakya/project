@@ -1,12 +1,15 @@
+import { Link, useParams } from 'react-router-dom';
 import {Header} from './App'
 
-export default function ItemView({ order, orders }) {
-    const theme = (order.type === 'buy') ? 'blue': 'red';
+export default function ItemView({ orders }) {
+    const {id} = useParams();
+    const order = orders.find((element)=> element.id == id);
     return (
         <div id="itemView" className={order.type}>
             <Header />
             <div id="imageSeller">
                 <ItemImage image={order.imgSource} />
+                <div id='itemPrice'>Rs. {order.price}</div>
                 <OrderOwner owner={order.sellerName}/>
             </div>
             <div id="properties">
@@ -46,13 +49,13 @@ function Comments() {
 
 function  SimilarItems ({order}) {
     return (
-        <div id='similarItem'>
-            <div id='similarItemPhotoHolder'>
-                <img src={order.imgSource} id='similarItemPhoto'/>
-            </div>
-            <div id='similarOrdername'>{order.name}</div>
-            <div id='similarPrice'>{order.price}</div>
-        </div>
+            <Link to={`/orders/${order.id}`} id='similarItem'>
+                <div id='similarItemPhotoHolder'>
+                    <img src={order.imgSource} id='similarItemPhoto'/>
+                </div>
+                <div id='similarOrdername'>{order.name}</div>
+                <div id='similarPrice'>Rs. {order.price}</div>
+            </Link>
     )
 }
 function SimilarItemsTray({similarOrders}) {

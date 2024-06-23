@@ -1,9 +1,13 @@
-import {Header} from './App'
 
 export default function PostItem() {
     return (
-        <div id="itemView">
-            <Header />
+        <form id="itemView">
+            <span id="sell">Sell</span>
+            <label id="switch">
+                <input id="switchCheckbox" type="checkbox"/>
+                <div id="slider"></div>
+            </label>
+            <span id="buy">Buy</span>
             <div id="imageSeller">
                 <ItemImage />
                 <OrderOwner />
@@ -11,22 +15,26 @@ export default function PostItem() {
             <div id="properties">
                 <input id="itemName" placeholder='Item name' />
                 <Description />
+                <button type="submit" id="placeorder">Place Order</button>
             </div>
-        </div>
+        </form>
     );
 }
 
 function ItemImage(){
     return (
         <div id="itemImage">
-            <input type='file' placeholder='Upload Photo' />
+            <label id="fileupload">
+                <input type='file' placeholder='Upload Photo' />
+                Upload a Photo
+            </label>
         </div>
     )
 }
 function Description() {
     return (
-        <input id="description">
-        </input>
+        <textarea id="description" placeholder='Description...'>
+        </textarea>
     )
 }
 

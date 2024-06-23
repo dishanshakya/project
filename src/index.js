@@ -17,9 +17,10 @@ root.render(
       <Routes>
         <Route path='/' element={<App />} />
         <Route path='/post' element={<PostItem />}></Route>
-        <Route path='itemview' element={<ItemView order={orders[0]} orders={orders} />} />
+        <Route path='/post' element={<ItemView order={orders[0]} orders={orders} />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/orders/:id' element={<ItemView orders={orders} />} />
       </Routes>
     </BrowserRouter>
 

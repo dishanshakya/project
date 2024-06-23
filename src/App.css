@@ -1,6 +1,12 @@
 :root {
     --mygrey: #e6e6e6;
     --mydarkergrey: #bfbfbf;
+
+}
+
+a {
+    text-decoration: none;
+    color: black;
 }
 
 body, #homepage {
@@ -82,7 +88,7 @@ button#post:hover {
 }
 
 #recentItem:hover {
-    box-shadow: 4px 4px 2px var(--mydarkergrey);
+    box-shadow: 2px 2px 5px black;
     margin: 8px 11px 11px 8px;
 
 }
@@ -129,14 +135,14 @@ form > button > #icon {
     width: auto;
 }
 
-form > button {
+form#search > button {
     background-color: white;
     border: none;
     border-radius: 30px;
     margin-left: 5px;
 }
 
-form >button:hover {
+form#search >button:hover {
     box-shadow: 0 0 2px grey;
 }
 
@@ -160,11 +166,11 @@ form >button:hover {
 }
 
 #profile button:hover {
-    box-shadow: 0 0 2px blue;
+    box-shadow: 0 0 2px black;
 }
 
 #profile button#signup {
-    background-color: blue;
+    background-color: black;
     color: white;
 }
 

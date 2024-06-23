@@ -21,6 +21,7 @@
     grid-row: 3 / 11;
     display: grid;
     grid-template-rows: repeat(10, 1fr);
+    grid-template-columns: 1fr 1fr;
     padding: 20px;
     border: 1px solid var(--mygrey);
     border-radius: 20px;
@@ -33,7 +34,20 @@
     justify-content: center;
     font-weight: bold;
     font-size: 20px;
+    grid-column: 1 / 3;
 }
+
+#itemPrice {
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #00cc00;
+    grid-column: 1 / 3;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
 
 #itemView > #header {
     grid-column: 1 / 21;
@@ -59,7 +73,7 @@
 }
 
 #similarItem:hover {
-    background-color: var(--mydarkergrey);
+    box-shadow: 0 0 4px black;
 }
 
 #similarItemPhotoHolder {
@@ -77,9 +91,9 @@
     grid-row: 2 / 4;
     grid-column: 2;
     overflow: clip;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: bold;
-    text-indent: 50px;
+    margin-left: 50px;
 }
 
 #similarPrice {
@@ -103,9 +117,9 @@
 }
 
 #itemImage {
-    grid-row: 1 / 8;
+    grid-row: 1 / 7;
     grid-column: 1 / 3;
-    margin: 50px;
+    margin: 0 50px 0 50px;
     overflow: clip;
     display: flex;
     align-items: center;
@@ -122,13 +136,105 @@
 
 #description {
     grid-row: 3 / 6;
+    grid-column: 1 / 3;
+    font-size: 18px;
 }
 
 #itemName {
     grid-row: 1 / 3;
+    grid-column: 1 / 3;
     display: flex;
-    text-align: center;
     align-items: center;
     font-size: 30px;
     font-weight: bold;
+}
+
+form#itemView input,form#itemView textarea {
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+form#itemView input:focus, form#itemView textarea:focus {
+    outline: none;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#fileupload {
+    height: 95%;
+    width: 95%;
+    border: 3px dashed grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: grey;
+    cursor: pointer;
+}
+
+label#switch {
+    grid-column: 13 / 14;
+    grid-row: 2;
+    height: 30px;
+    border-radius: 20px;
+    border: solid 2px var(--mydarkergrey);
+    display: grid;
+    align-items: center;
+}
+
+#switchCheckbox {
+    display: none;
+}
+
+#slider {
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    background-color: grey;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-radius: 50%;
+    background-color: var(--myred);
+}
+
+input:checked + #slider {
+    justify-self: end;
+    background-color: var(--myblue);
+}
+
+#itemView #sell {
+    color: var(--myred);
+    grid-column: 12;
+    grid-row: 2;
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 5px;
+    justify-self: center;
+}
+
+#itemView #buy {
+    color: var(--myblue);
+    justify-self: center;
+    margin-top: 5px;
+    grid-column: 14;
+    grid-row: 2;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#placeorder {
+    grid-column: 2;
+    grid-row: 10;
+    margin: 5px;
+    border-radius: 10px;
+    border: none;
+    background-color: black;
+    color: white;
+    box-shadow: 1px 1px grey;
+}
+:root {
+    --myred: #cc0000;
+    --myblue: #002080;
 }

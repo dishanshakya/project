@@ -5,7 +5,6 @@ export function Login() {
     const [passwordValue, setPasswordValue] = useState('');
     const [passwordType, setPasswordType] = useState('password');
     const btn = document.getElementById('loginbtn');
-    console.log(btn)
     return (
         <div id="LoginPage">
             <form>
@@ -32,7 +31,7 @@ export function Login() {
                 </div>
                 <button id="loginbtn" disabled>Login</button>
                 <br/>
-                <div id="switch">Or create an account <Link to='/signup'>here</Link></div>
+                <div id="switch">Or create an account <Link to='/signup' replace>here</Link></div>
             </form>
         </div>
     )
@@ -43,7 +42,6 @@ export function SignUp() {
     const [passwordValue, setPasswordValue] = useState('');
     const [warnings, setWarnings] = useState();
     const btn = document.getElementById('signbtn');
-    console.log(btn)
     
     return (
         <div id="LoginPage">
@@ -83,7 +81,7 @@ export function SignUp() {
                     Show password
                 </div>
                 <button id="signbtn" disabled>Create Account</button><br />
-                <div id="switch">Have an account? Login <Link to='/login'>here</Link></div>
+                <div id="switch">Have an account? Login <Link to='/login' replace>here</Link></div>
             </form>
         </div>
     )

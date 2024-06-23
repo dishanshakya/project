@@ -40,7 +40,7 @@ function Profile() {
 
 function Logo() {
   return (
-    <div id="logo">LOGO</div>
+    <Link to='/' id="logo">LOGO</Link>
   );
 }
 
@@ -55,20 +55,22 @@ function RecentItemTray({ orders }) {
 
 function RecentItem({ order }) {
   return (
-    <div id="recentItem">
-      <div id="recentImage">
-        <img src={order.imgSource} /><br/>
-      </div> 
-      <div id="ordername">{ order.name }</div><br/>
-      <div id="price">Price: { order.price }</div><br/>
-    </div>
+    <Link to={`/orders/${order.id}`}>
+      <div id="recentItem">
+        <div id="recentImage">
+          <img src={order.imgSource} /><br/>
+        </div> 
+        <div id="ordername">{ order.name }</div><br/>
+        <div id="price">Price: { order.price }</div><br/>
+      </div>
+    </Link>
   );
 }
 function Search() {
   return (
     <form id="search">
       <input type="text" name="search" placeholder="Search..."/>
-      <button type="submit"><img id="icon" src="images/searchicon.png" /></button>
+      <button type="submit"><img id="icon" src="/images/searchicon.png" /></button>
     </form>
   )
 }
