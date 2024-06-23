@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import ItemView from './Item';
+import PostItem from './Post';
 import { Login, SignUp } from './Login';
 import { orders } from './imgResources';
 import './App.css';
@@ -15,6 +16,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<App />} />
+        <Route path='/post' element={<PostItem />}></Route>
         <Route path='itemview' element={<ItemView order={orders[0]} orders={orders} />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/login' element={<Login />} />

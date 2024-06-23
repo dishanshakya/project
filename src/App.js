@@ -19,7 +19,7 @@ export function Header() {
   <div id="header">
     <Logo />
     <Search />
-    <button id="post" >Post an order</button>
+      <Link to='/post'><button id="post" >Post an order</button></Link>
     <Profile />
   </div>
   );
