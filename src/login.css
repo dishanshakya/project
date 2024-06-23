@@ -1,7 +1,7 @@
 :root {
     --pass-outline-color: blue;
 }
-body {
+#LoginPage {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,7 +10,7 @@ body {
     width: 100vw;
 }
 
-form {
+#LoginPage>form {
     border-radius: 20px;
     background-color: white;
     height: 60%;
@@ -22,7 +22,7 @@ form {
     box-shadow: 0 0 5px #bfbfbf;
 }
 
-input {
+#LoginPage input {
     height: 40px;
     border: 0.5px solid #0066ff;
     border-radius: 10px;
@@ -32,15 +32,15 @@ input {
     
 }
 
-input:hover {
+#LoginPage input:hover {
     box-shadow: 0 0 2px #0066ff;
 }
 
-input:focus {
+#LoginPage input:focus {
     outline: 2px solid blue;
 }
 
-input#password:focus, input#cpassword:focus {
+#LoginPage input#password:focus, #LoginPage>input#cpassword:focus {
     outline: 2px solid var(--pass-outline-color);
     border-color: var(--pass-outline-color);
 }
@@ -59,11 +59,11 @@ input#password:focus, input#cpassword:focus {
     text-align: 5px;
     margin-top: 2%;
     font-size: 12px;
-    color: var(--pass-outline-color);
+    color: red;
     height: 20px;
 }
 
-form > button {
+#LoginPage>form > button {
     width: 150px;
     height: 50px;
     font-size: 20px;
@@ -74,13 +74,12 @@ form > button {
     border: none;
     box-shadow: 0 0 3px #bfbfbf;
     border-radius: 15px;
-    background-color: #0066ff;
+    background-color: grey;
     color: white;
     font-weight: 1000;
 }
 
-form > button:hover {
-    background-color: blue;
+#LoginPage>form > button:hover {
     box-shadow: 0 0 5px #0000ff;
 }
 
@@ -92,7 +91,7 @@ form#signup > button {
     width: 200px;
 }
 
-input[type=checkbox] {
+#LoginPage input[type=checkbox] {
     height: 15px;
     width: 15px;
 }

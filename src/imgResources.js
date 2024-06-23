@@ -1,8 +1,11 @@
 export const orders = [
     {
-        imgSource: 'images/drafter.jpg',
+        imgSource: 'images/chonky.webp',
         price: 300,
-        name: 'Drafter'
+        description: 'hello everyone buy my drafter cheap all part ok',
+        sellerName: 'Diwas Dahal',
+        name: 'Drafter',
+        type: 'sell'
     },
 
     {

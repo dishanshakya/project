@@ -1,4 +1,5 @@
 import { orders } from "./imgResources";
+import { Link } from "react-router-dom";
 
 function Homepage() {
   return (
@@ -13,7 +14,7 @@ function Homepage() {
   );
 }
 
-function Header() {
+export function Header() {
   return (
   <div id="header">
     <Logo />
@@ -27,8 +28,12 @@ function Header() {
 function Profile() {
   return (
     <div id="profile">
-      <button id="login" className="logButtons">login</button>
-      <button id="signup" className="logButtons">Sign Up</button>
+      <Link to='/login'>
+        <button id="login" className="logButtons">login</button>
+      </Link>
+      <Link to='/signup'>
+        <button id="signup" className="logButtons">Sign Up</button>
+      </Link>
     </div>
   );
 }
