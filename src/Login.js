@@ -2,13 +2,26 @@ import { Link } from "react-router-dom"
 import { useState } from "react";
 
 export function Login() {
+    const [passwordValue, setPasswordValue] = useState('');
     const [passwordType, setPasswordType] = useState('password');
+    const btn = document.getElementById('loginbtn');
+    console.log(btn)
     return (
         <div id="LoginPage">
             <form>
                 <div className="logintext">Login</div>
                 <input type="text" placeholder="Email" required /><br/>
-                <input id="password" type={passwordType} placeholder="Password" required /><br/>
+                <input id="password" type={passwordType} placeholder="Password" 
+                value={passwordValue}
+                onChange={(e)=>{
+                    setPasswordValue(e.target.value);
+                    if(passwordValue.length >=8){
+                        btn.style.backgroundColor = '#0066ff';
+                        btn.style.color = 'white';
+                        btn.disabled = false;
+                    }
+
+                }}required /><br/>
                 <div id="showpass">
                     <input id="showpasscheck" type="checkbox" value="show password" onChange={()=>{
                         if(passwordType === 'text')
@@ -17,7 +30,7 @@ export function Login() {
                     }}/>
                     Show password
                 </div>
-                <button>Login</button>
+                <button id="loginbtn" disabled>Login</button>
                 <br/>
                 <div id="switch">Or create an account <Link to='/signup'>here</Link></div>
             </form>
@@ -30,6 +43,8 @@ export function SignUp() {
     const [passwordValue, setPasswordValue] = useState('');
     const [warnings, setWarnings] = useState();
     const btn = document.getElementById('signbtn');
+    console.log(btn)
+    
     return (
         <div id="LoginPage">
             <form id="signup">
