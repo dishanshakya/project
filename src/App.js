@@ -40,7 +40,9 @@ function Profile() {
 
 function Logo() {
   return (
-    <Link to='/' id="logo">LOGO</Link>
+    <Link to='/' id="logo">
+      <img id='logoImage' src="/images/logo.png" />
+    </Link>
   );
 }
 

@@ -154,6 +154,10 @@ form#search >button:hover {
     align-items: center;
 }
 
+#logoImage {
+    height: 100%;
+    width: 100%;
+}
 #profile button {
     height: 40px;
     width: 80px;
