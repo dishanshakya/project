@@ -1,9 +1,8 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import {Header} from './App'
 
 export default function ItemView({ orders }) {
-    const {id} = useParams();
-    const order = orders.find((element)=> element.id == id);
+    const order = useLoaderData();
     return (
         <div id="itemView" className={order.type}>
             <Header />

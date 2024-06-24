@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom';
 import App from './App';
 import ItemView from './Item';
 import PostItem from './Post';
@@ -9,22 +9,29 @@ import { orders } from './imgResources';
 import './App.css';
 import './Item.css'
 import './login.css'
+import { ErrorPage } from './ErrorPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <>
+      <Route path='/' element={<App />} />
+      <Route path='/post' element={<PostItem />}></Route>
+      <Route path='/post' element={<ItemView order={orders[0]} orders={orders} />} />
+      <Route path='/signup' element={<SignUp />} />
+      <Route path='/login' element={<Login />} />
+      <Route 
+        path='/orders/:id' 
+        element={<ItemView orders={orders} />}
+        loader={({params})=> orders.find((element)=> element.id == params.id)} 
+        errorElement={<ErrorPage />}
+      />
+    </>
+  )
+);
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<App />} />
-        <Route path='/post' element={<PostItem />}></Route>
-        <Route path='/post' element={<ItemView order={orders[0]} orders={orders} />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/orders/:id' element={<ItemView orders={orders} />} />
-      </Routes>
-    </BrowserRouter>
-
-    
+    <RouterProvider router={router} />    
   </React.StrictMode>
 );
 

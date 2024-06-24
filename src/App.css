@@ -202,3 +202,7 @@ form#search >button:hover {
     box-shadow: 0 0 2px grey;
 }
 
+h1#error {
+    grid-column: 5 / 11;
+    grid-row: 4;
+}
