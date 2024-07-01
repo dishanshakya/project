@@ -15,7 +15,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path='/' element={<App />} />
+      <Route path='/' 
+        loader={async ()=> {
+          const response = await fetch('http://localhost:4000/orders')
+          return await response.json();
+        }}
+        element={<App />} />
       <Route path='/post' element={<PostItem />}></Route>
       <Route path='/post' element={<ItemView order={orders[0]} orders={orders} />} />
       <Route path='/signup' element={<SignUp />} />
@@ -23,7 +28,10 @@ const router = createBrowserRouter(
       <Route 
         path='/orders/:id' 
         element={<ItemView orders={orders} />}
-        loader={({params})=> orders.find((element)=> element.id == params.id)} 
+        loader={async ({params})=> {
+          const response = await fetch(`http://localhost:4000/order/${params.id}`)
+          return await response.json();
+        }}
         errorElement={<ErrorPage />}
       />
     </>

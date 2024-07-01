@@ -59,7 +59,7 @@ function  SimilarItems ({order}) {
 }
 function SimilarItemsTray({similarOrders}) {
     const similarOrdersRow = similarOrders.map(
-        (eachOrder) => <SimilarItems order={eachOrder} />
+        (eachOrder) => <SimilarItems key={eachOrder.id} order={eachOrder} />
     );
     return (
         <div id="similarItemsTray">

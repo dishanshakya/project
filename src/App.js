@@ -1,7 +1,7 @@
-import { orders } from "./imgResources";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 function Homepage() {
+  const orders = useLoaderData();
   return (
     <div id="homepage">
     <Header />
@@ -48,7 +48,7 @@ function Logo() {
 
 function RecentItemTray({ orders }) {
   const orderRow = orders.map(
-    (eachOrder) => <RecentItem order={eachOrder} />
+    (eachOrder) => <RecentItem key={eachOrder.id} order={eachOrder} />
   );
   return (
     <div id="recentTray">{orderRow}</div>

@@ -1,16 +1,36 @@
 import { Link } from "react-router-dom"
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 export function Login() {
     const [passwordValue, setPasswordValue] = useState('');
+    const [emailValue, setEmailValue] = useState('')
     const [passwordType, setPasswordType] = useState('password');
+    const [responseStatus, setResponseStatus] = useState();
     const btn = document.getElementById('loginbtn');
-    return (
+    return ( (responseStatus == 200) ? <Navigate to='/' replace /> :
         <div id="LoginPage">
-            <form>
+            <form onSubmit={async (event)=> {
+                event.preventDefault()
+                const response = await fetch('http://localhost:4000/login', {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        email: emailValue,
+                        password: passwordValue
+                    })
+                }) 
+                console.log(response.status)
+                setResponseStatus(response.status)
+                
+            }}>
                 <div className="logintext">Login</div>
-                <input type="text" placeholder="Email" required /><br/>
-                <input id="password" type={passwordType} placeholder="Password" 
+                <input type="text" 
+                    placeholder="Email" 
+                    value={emailValue}
+                    onChange={(e) => setEmailValue(e.target.value)}
+                    required /><br/>
+                <input id="password" type={passwordType} placeholder="Password" minLength={8}
                 value={passwordValue}
                 onChange={(e)=>{
                     setPasswordValue(e.target.value);
@@ -51,7 +71,7 @@ export function SignUp() {
                 <input type="text" placeholder="Last Name" required /><br/>
                 <input type="email" placeholder="Email" required /><br />
                 <input id="password" type={passwordType}
-                    placeholder="Password" minlength="8" value={passwordValue}
+                    placeholder="Password" minLength={8} value={passwordValue}
                     onChange={(e)=>{
                         setPasswordValue(e.target.value);
                         if(passwordValue.length < 8 && passwordValue.length > 0)
@@ -60,7 +80,7 @@ export function SignUp() {
                     }}required />
                 <br />
                 <input  id="cpassword" type={passwordType} 
-                placeholder="Confirm Password" minlength="8" 
+                placeholder="Confirm Password" minLength={8} 
                 onChange={(e)=> {
                     if(passwordValue !== e.target.value)
                         setWarnings('Passwords don\'t match');
