@@ -17,7 +17,7 @@ const router = createBrowserRouter(
     <>
       <Route path='/' 
         loader={async ()=> {
-          const response = await fetch('http://localhost:4000/orders')
+          const response = await fetch('http://localhost:4000/recentorders')
           return await response.json();
         }}
         element={<App />} />
@@ -27,10 +27,11 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login />} />
       <Route 
         path='/orders/:id' 
-        element={<ItemView orders={orders} />}
+        element={<ItemView />}
         loader={async ({params})=> {
-          const response = await fetch(`http://localhost:4000/order/${params.id}`)
-          return await response.json();
+          const response = await fetch(`http://localhost:4000/orders/${params.id}`)
+          const additional = await fetch(`http://localhost:4000/similarorders/${params.id}`)
+          return {order: await response.json(), similar: await additional.json()}
         }}
         errorElement={<ErrorPage />}
       />

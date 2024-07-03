@@ -1,24 +1,24 @@
 import { Link, useLoaderData } from 'react-router-dom';
 import {Header} from './App'
 
-export default function ItemView({ orders }) {
-    const order = useLoaderData();
+export default function ItemView() {
+    const {order, similar} = useLoaderData();
     return (
         <div id="itemView" className={order.type}>
             <Header />
             <div id="imageSeller">
-                <ItemImage image={order.imgSource} />
+                <ItemImage image={order.imgsource} />
                 <div id='itemPrice'>Rs. {order.price}</div>
                 <OrderOwner owner={order.sellerName}/>
             </div>
             <div id="properties">
                 <div id="itemName">
-                    {order.name}
+                    {order.product_name}
                 </div>
                 <Description description={order.description}/>
                 <Comments />
             </div>
-            <SimilarItemsTray similarOrders={orders}/>
+            <SimilarItemsTray similarOrders={similar}/>
         </div>
     );
 }
@@ -48,18 +48,18 @@ function Comments() {
 
 function  SimilarItems ({order}) {
     return (
-            <Link to={`/orders/${order.id}`} id='similarItem'>
+            <Link to={`/orders/${order.order_id}`} id='similarItem'>
                 <div id='similarItemPhotoHolder'>
-                    <img src={order.imgSource} id='similarItemPhoto'/>
+                    <img src={order.imgsource} id='similarItemPhoto'/>
                 </div>
-                <div id='similarOrdername'>{order.name}</div>
+                <div id='similarOrdername'>{order.product_name}</div>
                 <div id='similarPrice'>Rs. {order.price}</div>
             </Link>
     )
 }
 function SimilarItemsTray({similarOrders}) {
     const similarOrdersRow = similarOrders.map(
-        (eachOrder) => <SimilarItems key={eachOrder.id} order={eachOrder} />
+        (eachOrder) => <SimilarItems key={eachOrder.order_id} order={eachOrder} />
     );
     return (
         <div id="similarItemsTray">

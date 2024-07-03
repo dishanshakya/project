@@ -48,7 +48,7 @@ function Logo() {
 
 function RecentItemTray({ orders }) {
   const orderRow = orders.map(
-    (eachOrder) => <RecentItem key={eachOrder.id} order={eachOrder} />
+    (eachOrder) => <RecentItem key={eachOrder.order_id} order={eachOrder} />
   );
   return (
     <div id="recentTray">{orderRow}</div>
@@ -57,12 +57,12 @@ function RecentItemTray({ orders }) {
 
 function RecentItem({ order }) {
   return (
-    <Link to={`/orders/${order.id}`}>
+    <Link key={order.order_id} to={`/orders/${order.order_id}`}>
       <div id="recentItem">
         <div id="recentImage">
-          <img src={order.imgSource} /><br/>
+          <img src={`http://localhost:4000${order.imgsource}`} /><br/>
         </div> 
-        <div id="ordername">{ order.name }</div><br/>
+        <div id="ordername">{ order.product_name }</div><br/>
         <div id="price">Price: { order.price }</div><br/>
       </div>
     </Link>

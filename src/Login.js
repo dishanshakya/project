@@ -7,7 +7,14 @@ export function Login() {
     const [emailValue, setEmailValue] = useState('')
     const [passwordType, setPasswordType] = useState('password');
     const [responseStatus, setResponseStatus] = useState();
+    const [warnings, setWarnings] = useState();
     const btn = document.getElementById('loginbtn');
+
+    if(responseStatus == 400) {
+        setWarnings('Incorrect email or password!')
+        setResponseStatus(null)
+    }
+
     return ( (responseStatus == 200) ? <Navigate to='/' replace /> :
         <div id="LoginPage">
             <form onSubmit={async (event)=> {
@@ -20,7 +27,6 @@ export function Login() {
                         password: passwordValue
                     })
                 }) 
-                console.log(response.status)
                 setResponseStatus(response.status)
                 
             }}>
@@ -29,18 +35,24 @@ export function Login() {
                     placeholder="Email" 
                     value={emailValue}
                     onChange={(e) => setEmailValue(e.target.value)}
-                    required /><br/>
+                    required />
                 <input id="password" type={passwordType} placeholder="Password" minLength={8}
                 value={passwordValue}
                 onChange={(e)=>{
                     setPasswordValue(e.target.value);
-                    if(passwordValue.length >=8){
+                    setWarnings('');
+                    if(e.target.value.length >=8){
                         btn.style.backgroundColor = '#0066ff';
                         btn.style.color = 'white';
                         btn.disabled = false;
                     }
+                    else {
+                        btn.style.backgroundColor = 'white';
+                        btn.style.color = 'grey';
+                        btn.disabled = true;
+                    }
 
-                }}required /><br/>
+                }}required />
                 <div id="showpass">
                     <input id="showpasscheck" type="checkbox" value="show password" onChange={()=>{
                         if(passwordType === 'text')
@@ -49,8 +61,8 @@ export function Login() {
                     }}/>
                     Show password
                 </div>
+                <div id="warnings">{warnings}</div>
                 <button id="loginbtn" disabled>Login</button>
-                <br/>
                 <div id="switch">Or create an account <Link to='/signup' replace>here</Link></div>
             </form>
         </div>
@@ -61,24 +73,56 @@ export function SignUp() {
     const [passwordType, setPasswordType] = useState('password');
     const [passwordValue, setPasswordValue] = useState('');
     const [warnings, setWarnings] = useState();
+    const [name, setName] = useState('')
+    const [emailValue, setEmailValue] = useState('')
+    const [gender, setGender] = useState('0')
+    const [responseStatus, setResponseStatus] = useState();
     const btn = document.getElementById('signbtn');
-    
-    return (
+    const handle = (func, event) => {
+        func(event.target.value)
+    }
+    if(responseStatus == 400) {
+        setWarnings('Email alredy used!')
+        setResponseStatus(null)
+    }
+
+    return ((responseStatus == 200) ? <Navigate to='/' replace /> :
         <div id="LoginPage">
-            <form id="signup">
+            <form id="signup" onSubmit={async (e) => {
+                e.preventDefault()
+                const response = await fetch('http://localhost:4000/signup', {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        username: name,
+                        gender: gender,
+                        email: emailValue,
+                        password: passwordValue
+                    })
+                })
+                setResponseStatus(response.status)
+            }}>
                 <div className="logintext">Fill in the details</div>
-                <input type="text" placeholder="First Name" required /><br/>
-                <input type="text" placeholder="Last Name" required /><br/>
-                <input type="email" placeholder="Email" required /><br />
+                <input type="text" value={name} placeholder="Name" 
+                    required onChange={(e)=> handle(setName,e)}/>
+                    <select id="selectmale" onChange={(e)=> handle(setGender, e)}>
+                        <option value={0}>Male</option>
+                        <option value={1}>Female</option>
+                    </select>
+                <input type="email" value={emailValue} placeholder="Email" 
+                    required onChange={(e)=>{
+                        handle(setEmailValue,e)
+                        setWarnings('')
+                    }}/>
                 <input id="password" type={passwordType}
                     placeholder="Password" minLength={8} value={passwordValue}
                     onChange={(e)=>{
                         setPasswordValue(e.target.value);
-                        if(passwordValue.length < 8 && passwordValue.length > 0)
+                        if(e.target.value.length < 8 && e.target.value.length > 0)
                             setWarnings('8 or more characters required');
                         else setWarnings('');
                     }}required />
-                <br />
+                
                 <input  id="cpassword" type={passwordType} 
                 placeholder="Confirm Password" minLength={8} 
                 onChange={(e)=> {
@@ -100,7 +144,7 @@ export function SignUp() {
                     }}/>
                     Show password
                 </div>
-                <button id="signbtn" disabled>Create Account</button><br />
+                <button id="signbtn" disabled>Create Account</button>
                 <div id="switch">Have an account? Login <Link to='/login' replace>here</Link></div>
             </form>
         </div>
