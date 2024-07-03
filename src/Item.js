@@ -1,24 +1,24 @@
 import { Link, useLoaderData } from 'react-router-dom';
 import {Header} from './App'
 
-export default function ItemView() {
-    const {order, similar} = useLoaderData();
+export default function ItemView({ orders }) {
+    const order = useLoaderData();
     return (
         <div id="itemView" className={order.type}>
             <Header />
             <div id="imageSeller">
-                <ItemImage image={order.imgsource} />
+                <ItemImage image={order.imgSource} />
                 <div id='itemPrice'>Rs. {order.price}</div>
-                <OrderOwner owner={order.sellerName}/>
+                <OrderOwner owner={order}/>
             </div>
             <div id="properties">
                 <div id="itemName">
-                    {order.product_name}
+                    {order.name}
                 </div>
                 <Description description={order.description}/>
                 <Comments />
             </div>
-            <SimilarItemsTray similarOrders={similar}/>
+            <SimilarItemsTray similarOrders={orders}/>
         </div>
     );
 }
@@ -48,18 +48,18 @@ function Comments() {
 
 function  SimilarItems ({order}) {
     return (
-            <Link to={`/orders/${order.order_id}`} id='similarItem'>
+            <Link to={`/orders/${order.id}`} id='similarItem'>
                 <div id='similarItemPhotoHolder'>
-                    <img src={order.imgsource} id='similarItemPhoto'/>
+                    <img src={order.imgSource} id='similarItemPhoto'/>
                 </div>
-                <div id='similarOrdername'>{order.product_name}</div>
+                <div id='similarOrdername'>{order.name}</div>
                 <div id='similarPrice'>Rs. {order.price}</div>
             </Link>
     )
 }
 function SimilarItemsTray({similarOrders}) {
     const similarOrdersRow = similarOrders.map(
-        (eachOrder) => <SimilarItems key={eachOrder.order_id} order={eachOrder} />
+        (eachOrder) => <SimilarItems order={eachOrder} />
     );
     return (
         <div id="similarItemsTray">
@@ -71,7 +71,16 @@ function SimilarItemsTray({similarOrders}) {
 function OrderOwner({owner}) {
     return (
         <div id="orderOwner">
-            {owner}
+            <div id='ownerKey'>
+                Seller Name: <br/>
+                Location: <br/>
+                Contact No.: <br/>
+            </div>
+            <div id='ownerValue'>
+                {owner.sellerName}<br/>
+                {owner.location}<br/>
+                {owner.contact}<br/>
+            </div>
         </div>
     )
 }
