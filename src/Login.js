@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 
 export function Login() {
@@ -8,7 +8,7 @@ export function Login() {
     const [passwordType, setPasswordType] = useState('password');
     const [responseStatus, setResponseStatus] = useState();
     const [warnings, setWarnings] = useState();
-    const btn = document.getElementById('loginbtn');
+    const btn = useRef()
 
     if(responseStatus == 400) {
         setWarnings('Incorrect email or password!')
@@ -42,14 +42,14 @@ export function Login() {
                     setPasswordValue(e.target.value);
                     setWarnings('');
                     if(e.target.value.length >=8){
-                        btn.style.backgroundColor = '#0066ff';
-                        btn.style.color = 'white';
-                        btn.disabled = false;
+                        btn.current.style.backgroundColor = '#0066ff';
+                        btn.current.style.color = 'white';
+                        btn.current.disabled = false;
                     }
                     else {
-                        btn.style.backgroundColor = 'white';
-                        btn.style.color = 'grey';
-                        btn.disabled = true;
+                        btn.current.style.backgroundColor = 'white';
+                        btn.current.style.color = 'grey';
+                        btn.current.disabled = true;
                     }
 
                 }}required />
@@ -62,7 +62,7 @@ export function Login() {
                     Show password
                 </div>
                 <div id="warnings">{warnings}</div>
-                <button id="loginbtn" disabled>Login</button>
+                <button ref={btn} id="loginbtn" disabled>Login</button>
                 <div id="switch">Or create an account <Link to='/signup' replace>here</Link></div>
             </form>
         </div>
@@ -77,7 +77,7 @@ export function SignUp() {
     const [emailValue, setEmailValue] = useState('')
     const [gender, setGender] = useState('0')
     const [responseStatus, setResponseStatus] = useState();
-    const btn = document.getElementById('signbtn');
+    const btn = useRef()
     const handle = (func, event) => {
         func(event.target.value)
     }
@@ -130,9 +130,9 @@ export function SignUp() {
                         setWarnings('Passwords don\'t match');
                     else {
                         setWarnings('');
-                        btn.disabled = false;
-                        btn.style.backgroundColor = '#0066ff';
-                        btn.style.color = 'white';
+                        btn.current.disabled = false;
+                        btn.current.style.backgroundColor = '#0066ff';
+                        btn.current.style.color = 'white';
                     }
                 }}required />
                 <div id="warnings">{warnings}</div>
@@ -144,7 +144,7 @@ export function SignUp() {
                     }}/>
                     Show password
                 </div>
-                <button id="signbtn" disabled>Create Account</button>
+                <button ref={btn} id="signbtn" disabled>Create Account</button>
                 <div id="switch">Have an account? Login <Link to='/login' replace>here</Link></div>
             </form>
         </div>
