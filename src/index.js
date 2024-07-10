@@ -28,7 +28,7 @@ const router = createBrowserRouter(
       <Route 
         path='/orders/:id' 
         element={<ItemView />}
-        loader={async ({params})=> {
+      loader={async ({params})=> {
           const response = await fetch(`http://localhost:4000/orders/${params.id}`)
           const additional = await fetch(`http://localhost:4000/similarorders/${params.id}`)
           return {order: await response.json(), similar: await additional.json()}
