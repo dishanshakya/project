@@ -17,14 +17,13 @@ export default function PostItem() {
                 formdata.append('product_name', itemName)
                 formdata.append('location', location)
                 formdata.append('contact', contact)
-                formdata.append('file', file)
+                // formdata.append('file', file)
                 formdata.append('description', description)
                 formdata.append('order_type', orderType)
                 formdata.append('price', price)
 
-                fetch('http://10.10.70.124:4000/api/v1/orders/postorder', {
+                fetch('http://localhost:4000/api/v1/order/postorder', {
                     method: "POST",
-                    headers: {"Content-Type": "multipart/form-data"},
                     body: formdata
                 })
             }}

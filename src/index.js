@@ -17,7 +17,7 @@ const router = createBrowserRouter(
     <>
       <Route path='/' 
         loader={async ()=> {
-          const response = await fetch('http://localhost:4000/recentorders')
+          const response = await fetch('http://localhost:4000/api/v1/order/recentorders')
           return await response.json();
         }}
         element={<App />} />
