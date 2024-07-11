@@ -60,7 +60,7 @@ function RecentItem({ order }) {
     <Link key={order.order_id} to={`/orders/${order.order_id}`}>
       <div id="recentItem">
         <div id="recentImage">
-          <img src={`http://localhost:4000${order.imgsource}`} /><br/>
+          <img src={order.img_src} /><br/>
         </div> 
         <div id="ordername">{ order.product_name }</div><br/>
         <div id="price">Price: { order.price }</div><br/>

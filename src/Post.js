@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { redirect, useNavigate } from "react-router-dom";
 
 export default function PostItem() {
     const [name, setName] = useState('')
@@ -9,23 +10,30 @@ export default function PostItem() {
     const [itemName, setItemName] = useState('')
     const [orderType, setOrderType] = useState('sell')
     const [price, setPrice] = useState()
+    const navigate = useNavigate()
+
     return (
         <form id="itemView"
-            onSubmit={(e)=> {
+            onSubmit={async (e)=> {
                 e.preventDefault()
                 const formdata = new FormData()
                 formdata.append('product_name', itemName)
                 formdata.append('location', location)
                 formdata.append('contact', contact)
-                // formdata.append('file', file)
+                formdata.append('file', file)
                 formdata.append('description', description)
                 formdata.append('order_type', orderType)
                 formdata.append('price', price)
 
-                fetch('http://localhost:4000/api/v1/order/postorder', {
+                const response = await fetch('http://localhost:4000/api/v1/order/postorder', {
                     method: "POST",
                     body: formdata
                 })
+                if(response.status == 200)
+                {
+                    console.log('success')
+                    navigate('/')
+                }
             }}
         >
             <div id="placeAnOrder">Place an order</div>

@@ -1,24 +1,24 @@
 import { Link, useLoaderData } from 'react-router-dom';
 import {Header} from './App'
 
-export default function ItemView({ orders }) {
-    const order = useLoaderData();
+export default function ItemView() {
+    const data = useLoaderData();
     return (
-        <div id="itemView" className={order.type}>
+        <div id="itemView" className={data.order.type}>
             <Header />
             <div id="imageSeller">
-                <ItemImage image={order.imgSource} />
-                <div id='itemPrice'>Rs. {order.price}</div>
-                <OrderOwner owner={order}/>
+                <ItemImage image={data.order.img_src} />
+                <div id='itemPrice'>Rs. {data.order.price}</div>
+                <OrderOwner owner={data.order}/>
             </div>
             <div id="properties">
                 <div id="itemName">
-                    {order.name}
+                    {data.order.product_name}
                 </div>
-                <Description description={order.description}/>
+                <Description description={data.order.description}/>
                 <Comments />
             </div>
-            <SimilarItemsTray similarOrders={orders}/>
+            <SimilarItemsTray similarOrders={data.similar}/>
         </div>
     );
 }
@@ -48,9 +48,9 @@ function Comments() {
 
 function  SimilarItems ({order}) {
     return (
-            <Link to={`/orders/${order.id}`} id='similarItem'>
+            <Link to={`/orders/${order.order_id}`} id='similarItem'>
                 <div id='similarItemPhotoHolder'>
-                    <img src={order.imgSource} id='similarItemPhoto'/>
+                    <img src={order.img_src} id='similarItemPhoto'/>
                 </div>
                 <div id='similarOrdername'>{order.name}</div>
                 <div id='similarPrice'>Rs. {order.price}</div>
@@ -77,7 +77,7 @@ function OrderOwner({owner}) {
                 Contact No.: <br/>
             </div>
             <div id='ownerValue'>
-                {owner.sellerName}<br/>
+                {owner.username}<br/>
                 {owner.location}<br/>
                 {owner.contact}<br/>
             </div>
