@@ -10,6 +10,7 @@ import './App.css';
 import './Item.css'
 import './login.css'
 import { ErrorPage } from './ErrorPage';
+import SearchPage from './Search'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter(
@@ -25,6 +26,14 @@ const router = createBrowserRouter(
       <Route path='/post' element={<ItemView order={orders[0]} orders={orders} />} />
       <Route path='/signup' element={<SignUp />} />
       <Route path='/login' element={<Login />} />
+      <Route 
+        path='/search' 
+        element={<SearchPage />}
+        loader={async ({request}) => {
+          const results = await fetch(`http://localhost:4000/api/v1/order/recentorders`)
+          return (results.status == 400) ? results.json() : null
+        }}
+      />
       <Route 
         path='/orders/:id' 
         element={<ItemView />}

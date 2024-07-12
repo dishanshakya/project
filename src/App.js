@@ -1,4 +1,5 @@
-import { Link, useLoaderData } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 
 function Homepage() {
   const orders = useLoaderData();
@@ -14,11 +15,11 @@ function Homepage() {
   );
 }
 
-export function Header() {
+export function Header({searchField}) {
   return (
   <div id="header">
     <Logo />
-    <Search />
+    <Search initialFieldValue={searchField}/>
       <Link to='/post'><button id="post" >Post an order</button></Link>
     <Profile />
   </div>
@@ -46,7 +47,7 @@ function Logo() {
   );
 }
 
-function RecentItemTray({ orders }) {
+export function RecentItemTray({ orders }) {
   const orderRow = orders.map(
     (eachOrder) => <RecentItem key={eachOrder.order_id} order={eachOrder} />
   );
@@ -68,10 +69,19 @@ function RecentItem({ order }) {
     </Link>
   );
 }
-function Search() {
+function Search({initialFieldValue}) {
+  const [query, setQuery] = useState(initialFieldValue)
+  const navigate = useNavigate()
   return (
-    <form id="search">
-      <input type="text" name="search" placeholder="Search..."/>
+    <form id="search"
+      onSubmit={(e) => {
+        e.preventDefault()
+        navigate(`/search?name=${encodeURIComponent(query)}`)
+      }}
+    >
+      <input type="text" name="search" 
+        placeholder="Search..." value={query}
+        onChange={(e)=> setQuery(e.target.value)}/>
       <button type="submit"><img id="icon" src="/images/searchicon.png" /></button>
     </form>
   )
@@ -82,7 +92,7 @@ function CategoryItems({ product}) {
 }
 
 
-function Categories() {
+export function Categories() {
   return (
     <div id="categories">
       <div id="categoryHeading">Categories</div><br/> 
