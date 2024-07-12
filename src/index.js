@@ -34,7 +34,7 @@ const router = createBrowserRouter(
           const results = await fetch(`http://localhost:4000/api/v1/order/recentorders`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: searchString
+            body: JSON.stringify({search: searchString})
           })
           return (results.status == 400) ? results.json() : null
         }}
