@@ -30,7 +30,12 @@ const router = createBrowserRouter(
         path='/search' 
         element={<SearchPage />}
         loader={async ({request}) => {
-          const results = await fetch(`http://localhost:4000/api/v1/order/recentorders`)
+          const searchString = new URL(request.url).searchParams.get('name')
+          const results = await fetch(`http://localhost:4000/api/v1/order/recentorders`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: searchString
+          })
           return (results.status == 400) ? results.json() : null
         }}
       />
