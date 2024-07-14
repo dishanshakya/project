@@ -5,10 +5,10 @@ import App from './App';
 import ItemView from './Item';
 import PostItem from './Post';
 import { Login, SignUp } from './Login';
-import { orders } from './imgResources';
 import './App.css';
 import './Item.css'
 import './login.css'
+import './cssclass.css'
 import { ErrorPage } from './ErrorPage';
 import SearchPage from './Search'
 
@@ -22,8 +22,12 @@ const router = createBrowserRouter(
           return await response.json();
         }}
         element={<App />} />
-      <Route path='/post' element={<PostItem />}></Route>
-      <Route path='/post' element={<ItemView order={orders[0]} orders={orders} />} />
+      <Route path='/post' element={<PostItem />}
+        loader={async () => {
+          const response = await fetch('http://localhost:4000/api/v1/order/categories')
+          return await response.json()
+        }}
+      ></Route>
       <Route path='/signup' element={<SignUp />} />
       <Route path='/login' element={<Login />} />
       <Route 
@@ -31,12 +35,12 @@ const router = createBrowserRouter(
         element={<SearchPage />}
         loader={async ({request}) => {
           const searchString = new URL(request.url).searchParams.get('name')
-          const results = await fetch(`http://localhost:4000/api/v1/order/recentorders`, {
+          const results = await fetch(`http://localhost:4000/api/v1/order/search`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({search: searchString})
           })
-          return (results.status == 400) ? results.json() : null
+          return (results.status == 200) ? results.json() : null
         }}
       />
       <Route 
@@ -45,7 +49,8 @@ const router = createBrowserRouter(
       loader={async ({params})=> {
           const response = await fetch(`http://localhost:4000/api/v1/order/${params.id}`)
           const additional = await fetch(`http://localhost:4000/api/v1/order/similarorders/${params.id}`)
-          return {order: await response.json(), similar: await additional.json()}
+          const comments = await fetch(`http://localhost:4000/api/v1/order/comments/${params.id}`)
+          return {order: await response.json(), similar: await additional.json(), comments: await comments.json()}
         }}
         errorElement={<ErrorPage />}
       />

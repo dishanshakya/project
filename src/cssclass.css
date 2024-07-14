@@ -1,0 +1,24 @@
+.flexbox-center-aligned {
+    display: flex;
+    align-items: center;
+}
+
+.round-input {
+    border: 1px solid var(--mydarkergrey);
+    border-radius: 20px;
+    height: 35px;
+    text-indent: 30px;
+    outline: none;
+}
+
+.no-border-bgcolor {
+    border: none;
+    background-color: white;
+}
+
+.img-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: clip;
+}

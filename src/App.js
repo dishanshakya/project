@@ -39,7 +39,7 @@ function Profile() {
   );
 }
 
-function Logo() {
+export function Logo() {
   return (
     <Link to='/' id="logo">
       <img id='logoImage' src="/images/logo.png" />
@@ -57,14 +57,51 @@ export function RecentItemTray({ orders }) {
 }
 
 function RecentItem({ order }) {
+  const bgcolor = order.order_type == 'sell' ? 'red' : 'blue'
+  function ago(time) {
+    let days, hours, mins
+    time /= 1000
+    time = Math.round(time)
+    days = Math.floor(time / 86400)
+    time -= 86400*days
+    hours = Math.floor(time / (60*60))
+    time -= hours*60*60
+    mins = Math.floor(time / 60)
+    return {day: days, hour: hours, min: mins}
+
+  }
+          const nigga = Date.now() - Date.parse(order.date)
+          const date = ago(nigga)
+          console.log(date)
+          console.log(nigga)
   return (
     <Link key={order.order_id} to={`/orders/${order.order_id}`}>
       <div id="recentItem">
+        <div id="ordertype" style={{backgroundColor: bgcolor}}>
+          {order.order_type}
+        </div>
         <div id="recentImage">
           <img src={order.img_src} /><br/>
         </div> 
-        <div id="ordername">{ order.product_name }</div><br/>
-        <div id="price">Price: { order.price }</div><br/>
+        <div id="ordername">{ order.product_name }</div>
+        <div id="productdesc">{order.description}</div>
+        <div id="price">
+          Rs.{ new Intl.NumberFormat('en-IN').format(order.price) }
+        </div>
+        <div id="time">
+          <div style={{
+            height: '25px',
+            overflow: 'clip',
+            display: 'flex',
+            alignItems: 'center'  
+          }}>
+            <img src="/images/clock.png" style={{height: '30px', width: 'auto'}}></img>
+          </div>
+          <div id="stamp" style={{fontSize: '15px', color: 'grey'}}>
+            {date.day ? `${date.day}d`: ''} {date.hour? `${date.hour}h`: ''} {date.min ? `${date.min}`: '1'}m ago
+          </div>
+          
+        </div>
       </div>
     </Link>
   );
@@ -81,7 +118,7 @@ function Search({initialFieldValue}) {
     >
       <input type="text" name="search" 
         placeholder="Search..." value={query}
-        onChange={(e)=> setQuery(e.target.value)}/>
+        onChange={(e)=> setQuery(e.target.value)} required/>
       <button type="submit"><img id="icon" src="/images/searchicon.png" /></button>
     </form>
   )

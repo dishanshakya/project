@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { Logo } from "./App";
 
 export default function PostItem() {
+    const categories = useLoaderData()
     const [name, setName] = useState('')
     const [location, setLocation] = useState('')
     const [contact, setContact] = useState('')
@@ -10,6 +12,7 @@ export default function PostItem() {
     const [itemName, setItemName] = useState('')
     const [orderType, setOrderType] = useState('sell')
     const [price, setPrice] = useState()
+    const [category, setCategory] = useState(0)
     const navigate = useNavigate()
 
     return (
@@ -24,6 +27,7 @@ export default function PostItem() {
                 formdata.append('description', description)
                 formdata.append('order_type', orderType)
                 formdata.append('price', price)
+                formdata.append('category', category)
 
                 const response = await fetch('http://localhost:4000/api/v1/order/postorder', {
                     method: "POST",
@@ -36,6 +40,7 @@ export default function PostItem() {
                 }
             }}
         >
+            <Logo />
             <div id="placeAnOrder">Place an order</div>
             <span id="sell">Sell</span>
             <label id="switch">
@@ -50,17 +55,19 @@ export default function PostItem() {
                 <label id="itemPrice">
                     Rs. 
                     <input id="itemPrice" placeholder="Price" value={price}
-                        onChange={(e)=> setPrice(e.target.value)}
+                        onChange={(e)=> setPrice(e.target.value)} required
                     />
                 </label>
                 <OrderOwner name={name} location={location}
                     contact={contact} setName={setName}
                     setLocation={setLocation} setContact={setContact}
+                    category={category} setCategory={setCategory}
+                    categorylist={categories}
                 />
             </div>
             <div id="properties">
                 <input id="itemName" placeholder='Item name' value={itemName}
-                    onChange={(e)=>setItemName(e.target.value)}
+                    onChange={(e)=>setItemName(e.target.value)} required
                 />
                 <Description description={description} setDescription={setDescription}/>
                 <button type="submit" id="placeorder">Place Order</button>
@@ -96,13 +103,15 @@ function Description({description, setDescription}) {
     )
 }
 
-function OrderOwner({name, setName, location, setLocation, contact, setContact}) {
+function OrderOwner({name, setName, location, setLocation, contact, setContact, category, setCategory, categorylist}) {
+    const list = categorylist.map((each)=> <option value={each.category_id}>{each.category_name}</option>)
     return (
         <div id="orderOwner">
             <div id='ownerKey'>
-                Seller Name: <br/>
+                Name: <br/>
                 Location: <br/>
                 Contact No.: <br/>
+                Category: <br/>
             </div>
             <div id='ownerValue'>
                 <input value={name} placeholder="[Name]" required
@@ -111,6 +120,9 @@ function OrderOwner({name, setName, location, setLocation, contact, setContact})
                 onChange={(e)=>setLocation(e.target.value)}/><br/>
                 <input value={contact} placeholder="[Contact]" required
                 onChange={(e)=>setContact(e.target.value)}/><br/>
+                <select value={category} onChange={(e)=> setCategory(e.target.value)}>
+                    {list}
+                </select>
             </div>
         </div>
     )

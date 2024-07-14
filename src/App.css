@@ -1,6 +1,8 @@
 :root {
     --mygrey: #e6e6e6;
     --mydarkergrey: #bfbfbf;
+    --pricecolor: #00cc00;
+    --descriptioncolor: #666666;
 
 }
 
@@ -95,12 +97,45 @@ button#post:hover {
 #ordername {
     grid-row: 3;
     grid-column: 6 / 16;
+    font-weight: bold;
+    font-size: 20px;
 }
 
+#ordertype {
+    grid-row: 1;
+    grid-column: 15 / 17;
+    color: white;
+    box-shadow: 0.5px 0.5px solid black;
+    text-align: center;
+    font-style: italic;
+    border-bottom-left-radius: 5px;
+    text-transform: uppercase;
+    padding-top: 5px;
+    font-size: 15px;
+}
+
+#productdesc {
+    grid-row: 5 / 7;
+    grid-column: 6 / 16;
+    height: 40px;
+    overflow: clip;
+    color: var(--descriptioncolor);
+}
 #price {
     grid-column: 6 / 16;
-    grid-row: 7;
+    grid-row: 8;
+    color: var(--pricecolor);
 }
+
+#time {
+    grid-row: 10 / 11;
+    grid-column: 13 / 17;
+    display: flex;
+    justify-content: right;
+    margin-right: 20px;
+    align-items: center;
+}
+
 
 #recentImage > img {
     height: 150px;
