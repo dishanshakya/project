@@ -1,5 +1,5 @@
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
-import {Header} from './App'
+import {Header, ago} from './App'
 import { useState } from 'react';
 
 export default function ItemView() {
@@ -79,6 +79,7 @@ function CommentWriteField({type, parentcomment, order}) {
                 e.preventDefault()
                 const response = await fetch(`http://localhost:4000/api/v1/order/${type}`, {
                     method: "POST",
+                    credentials: 'include',
                     headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                         order_id: order.order_id,
@@ -115,9 +116,12 @@ function Comment({comment}) {
                 <img src='/images/popcat.jpg' style={{height: '30px', width: 'auto'}}></img>
             </div>
             <div id='text'>
-                <div id='userid'>dishan</div>
+                <div id='userid'>{comment.username}</div>
                 <div id='commenttext'>{comment.text}</div>
                 <div id='replyicons'>
+                    <div style={{fontSize: '10px', color: 'grey', marginRight: '10px'}}>
+                        {ago(Date.now()-Date.parse(comment.date))}
+                    </div>
                     <img src='/images/reply.png' 
                         style={{height: '15px', width: 'auto', cursor: 'pointer'}} 
                         onClick={()=> setReplybox(!replybox)}

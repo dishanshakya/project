@@ -1,13 +1,15 @@
 import { useLoaderData, useSearchParams } from 'react-router-dom'
 import { RecentItemTray, Header, Categories} from './App.js'
+import { useState } from 'react'
 
 export default function SearchPage() {
-    const orders = useLoaderData()
+    const data = useLoaderData()
+    const [orders, setOrders] = useState(data.orders)
     const [searchParams, setSearchParams] = useSearchParams()
     return (
         <div id='homepage'>
-            <Header searchField={searchParams.get('name')}/>
-            <Categories />
+            <Header searchField={searchParams.get('name')} user={data.user}/>
+            <Categories list={data.categories} filter={{setOrders, data: data.orders}} />
             <div id="recentTrayHolder">
                 <div id="recentinfo">
                     Results for '<span style={{color: 'green'}}>{searchParams.get('name')}</span>'

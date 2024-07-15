@@ -22,6 +22,8 @@ export function Login() {
                 const response = await fetch('http://localhost:4000/api/v1/auth/login', {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
+                    credentials: 'include',
+                    mode: 'cors',
                     body: JSON.stringify({
                         email: emailValue,
                         password: passwordValue
@@ -93,6 +95,8 @@ export function SignUp() {
                 const response = await fetch('http://localhost:4000/api/v1/auth/register', {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
+                    credentials: 'include',
+                    mode: 'cors',
                     body: JSON.stringify({
                         username: name,
                         gender: gender,

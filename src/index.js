@@ -18,8 +18,13 @@ const router = createBrowserRouter(
     <>
       <Route path='/' 
         loader={async ()=> {
-          const response = await fetch('http://localhost:4000/api/v1/order/recentorders')
-          return await response.json();
+          const response = await fetch('http://localhost:4000/api/v1/order/recentorders', {
+            credentials: 'include'
+          })
+          const categories  = await fetch('http://localhost:4000/api/v1/order/categories', {
+            credentials: 'include'
+          })
+          return {recentorders: await response.json(), categories: await categories.json()};
         }}
         element={<App />} />
       <Route path='/post' element={<PostItem />}
@@ -35,12 +40,13 @@ const router = createBrowserRouter(
         element={<SearchPage />}
         loader={async ({request}) => {
           const searchString = new URL(request.url).searchParams.get('name')
+          const categories  = await fetch('http://localhost:4000/api/v1/order/categories')
           const results = await fetch(`http://localhost:4000/api/v1/order/search`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({search: searchString})
           })
-          return (results.status == 200) ? results.json() : null
+          return (results.status == 200) ? {orders: await results.json(), categories: await categories.json()} : null
         }}
       />
       <Route 

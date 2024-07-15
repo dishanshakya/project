@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 
 function Homepage() {
-  const orders = useLoaderData();
+  const data = useLoaderData();
+  const [orders, setOrders] = useState(data.recentorders)
   return (
     <div id="homepage">
     <Header />
-    <Categories />
+    <Categories list={data.categories} filter={{setOrders, data: data.recentorders}} />
     <div id="recentTrayHolder">
       <div id="recentinfo">Recently uploaded orders</div>
       <RecentItemTray orders={orders} />
@@ -27,7 +28,22 @@ export function Header({searchField}) {
 }
 
 function Profile() {
+  const [user, setUser] = useState(null)
+
+  useEffect(()=> {
+    async function validateUser(){
+      const data = await fetch('http://localhost:4000/api/v1/auth/tokenvalidity', {
+        credentials: 'include'
+      })
+      if (data.status == 200)
+        setUser(await data.json())
+      else console.log('fucked')
+    }
+    validateUser()
+  }, [])
+
   return (
+    user ? <div id="profile">{user.username}</div> :
     <div id="profile">
       <Link to='/login'>
         <button id="login" className="logButtons">login</button>
@@ -48,32 +64,33 @@ export function Logo() {
 }
 
 export function RecentItemTray({ orders }) {
+  if (!orders.length) {
+    return <div style={{justifySelf: 'center', padding: '40px'}}>No orders!</div>
+  }
+  else {
   const orderRow = orders.map(
     (eachOrder) => <RecentItem key={eachOrder.order_id} order={eachOrder} />
   );
   return (
     <div id="recentTray">{orderRow}</div>
-  );
+  );}
+}
+
+export function ago(time) {
+  let days, hours, mins
+  time /= 1000
+  time = Math.round(time)
+  days = Math.floor(time / 86400)
+  time -= 86400*days
+  hours = Math.floor(time / (60*60))
+  time -= hours*60*60
+  mins = Math.floor(time / 60)
+  const string = (days ? `${days}d`: '') + (hours? ` ${hours}h`: '') + (mins ? ` ${mins}`: '1') +'m ago'
+  return string
 }
 
 function RecentItem({ order }) {
   const bgcolor = order.order_type == 'sell' ? 'red' : 'blue'
-  function ago(time) {
-    let days, hours, mins
-    time /= 1000
-    time = Math.round(time)
-    days = Math.floor(time / 86400)
-    time -= 86400*days
-    hours = Math.floor(time / (60*60))
-    time -= hours*60*60
-    mins = Math.floor(time / 60)
-    return {day: days, hour: hours, min: mins}
-
-  }
-          const nigga = Date.now() - Date.parse(order.date)
-          const date = ago(nigga)
-          console.log(date)
-          console.log(nigga)
   return (
     <Link key={order.order_id} to={`/orders/${order.order_id}`}>
       <div id="recentItem">
@@ -98,7 +115,8 @@ function RecentItem({ order }) {
             <img src="/images/clock.png" style={{height: '30px', width: 'auto'}}></img>
           </div>
           <div id="stamp" style={{fontSize: '15px', color: 'grey'}}>
-            {date.day ? `${date.day}d`: ''} {date.hour? `${date.hour}h`: ''} {date.min ? `${date.min}`: '1'}m ago
+            {ago(Date.now()-Date.parse(order.date))}
+
           </div>
           
         </div>
@@ -124,19 +142,30 @@ function Search({initialFieldValue}) {
   )
 }
 
-function CategoryItems({ product}) {
-  return <div id="categoryItem">{ product }<br/></div>
+function CategoryItems({ product, filter}) {
+  return <label  onClick={()=> {
+    const newData = filter.data.filter((each)=> each.category == product.category_id)
+    filter.setOrders(newData)
+  }}>
+    <input type="radio" name="category" style={{display: 'none'}}></input>
+    <div id="categoryItem">{ product.category_name }<br/></div>
+  </label>
 }
 
 
-export function Categories() {
+export function Categories({list, filter}) {
+  const categories = list.map((each)=> <CategoryItems key={each.category_id} product={each} filter={filter} />)
   return (
     <div id="categories">
       <div id="categoryHeading">Categories</div><br/> 
-      <CategoryItems product={'Electronics'} />
-      <CategoryItems product={'Kitchen Ware'} />
-      <CategoryItems product={'Books'} />
-      <CategoryItems product={'Tools'} />
+        <label >
+          <input type="radio" name="category" style={{display: 'none'}} onChange={(e)=> {
+            if(e.target.checked)
+              filter.setOrders(filter.data)
+          }}></input>
+          <div id="categoryItem">All</div>
+          </label>
+        {categories}
       </div>
   )
 }

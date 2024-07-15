@@ -12,7 +12,7 @@ export default function PostItem() {
     const [itemName, setItemName] = useState('')
     const [orderType, setOrderType] = useState('sell')
     const [price, setPrice] = useState()
-    const [category, setCategory] = useState(0)
+    const [category, setCategory] = useState(1)
     const navigate = useNavigate()
 
     return (
@@ -31,7 +31,8 @@ export default function PostItem() {
 
                 const response = await fetch('http://localhost:4000/api/v1/order/postorder', {
                     method: "POST",
-                    body: formdata
+                    body: formdata,
+                    credentials: 'include'
                 })
                 if(response.status == 200)
                 {
