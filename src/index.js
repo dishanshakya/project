@@ -30,7 +30,13 @@ const router = createBrowserRouter(
       <Route path='/post' element={<PostItem />}
         loader={async () => {
           const response = await fetch('http://localhost:4000/api/v1/order/categories')
-          return await response.json()
+          const user = await fetch('http://localhost:4000/api/v1/auth/tokenvalidity', {
+            credentials: 'include'
+          })
+          return {
+            categories: await response.json(),
+            user: user.status == 200 ? await user.json() : 0
+          }
         }}
       ></Route>
       <Route path='/signup' element={<SignUp />} />

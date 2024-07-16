@@ -193,6 +193,11 @@ form#search >button:hover {
     height: 100%;
     width: 100%;
 }
+#profile {
+    display: flex;
+    column-gap: 30px;
+    align-items: center;
+}
 #profile button {
     height: 40px;
     width: 80px;

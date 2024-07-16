@@ -1,6 +1,7 @@
 import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import {Header, ago} from './App'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { checkTokenValidity } from './utils';
 
 export default function ItemView() {
     const data = useLoaderData();
@@ -69,8 +70,16 @@ function CommentBox({ordercomments}) {
 }
 function CommentWriteField({type, parentcomment, order}) {
     const [text, setText] = useState('')
+    const [user, setUser] = useState(0)
     const navigate = useNavigate()
-    return (
+    
+    useEffect(() => {
+        checkTokenValidity((response) => {
+                setUser(response.user_id)
+        })
+        
+    }, [])
+    return ( !user ? <div>Login to comment or reply</div> :
         <form id='writecomment' className='flexbox-center-aligned'
             style={{padding: '10px',
                 width: '100%'

@@ -1,10 +1,9 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { Logo } from "./App";
 
 export default function PostItem() {
-    const categories = useLoaderData()
-    const [name, setName] = useState('')
+    const  data = useLoaderData()
     const [location, setLocation] = useState('')
     const [contact, setContact] = useState('')
     const [file, setFile] = useState()
@@ -14,6 +13,12 @@ export default function PostItem() {
     const [price, setPrice] = useState()
     const [category, setCategory] = useState(1)
     const navigate = useNavigate()
+
+    useEffect(()=> {
+        if(!data.user) {
+            navigate('/login', {replace: true})
+        }
+    })
 
     return (
         <form id="itemView"
@@ -55,15 +60,15 @@ export default function PostItem() {
                 <ItemImage setFile={setFile}/>
                 <label id="itemPrice">
                     Rs. 
-                    <input id="itemPrice" placeholder="Price" value={price}
+                    <input id="itemPrice" inputMode="numeric" placeholder="Price" value={price}
                         onChange={(e)=> setPrice(e.target.value)} required
                     />
                 </label>
-                <OrderOwner name={name} location={location}
-                    contact={contact} setName={setName}
+                <OrderOwner name={data.user.username} location={location}
+                    contact={contact} 
                     setLocation={setLocation} setContact={setContact}
                     category={category} setCategory={setCategory}
-                    categorylist={categories}
+                    categorylist={data.categories}
                 />
             </div>
             <div id="properties">
@@ -88,7 +93,7 @@ function ItemImage({setFile}){
     return (
         <div id="itemImage">
             <label id="fileupload">
-                <input ref={fileInput} id="test" type='file'
+                <input ref={fileInput} id="test" type='file' accept="image/*"
                 placeholder='Upload Photo' onChange={uploadHandle}/>
                 <img src={uploadFileSrc} />
             </label>
@@ -104,7 +109,7 @@ function Description({description, setDescription}) {
     )
 }
 
-function OrderOwner({name, setName, location, setLocation, contact, setContact, category, setCategory, categorylist}) {
+function OrderOwner({name, location, setLocation, contact, setContact, category, setCategory, categorylist}) {
     const list = categorylist.map((each)=> <option value={each.category_id}>{each.category_name}</option>)
     return (
         <div id="orderOwner">
@@ -115,8 +120,7 @@ function OrderOwner({name, setName, location, setLocation, contact, setContact, 
                 Category: <br/>
             </div>
             <div id='ownerValue'>
-                <input value={name} placeholder="[Name]" required
-                onChange={(e)=>setName(e.target.value)}/><br/>
+                <div>{name}</div>
                 <input value={location} placeholder="[Location]" required
                 onChange={(e)=>setLocation(e.target.value)}/><br/>
                 <input value={contact} placeholder="[Contact]" required

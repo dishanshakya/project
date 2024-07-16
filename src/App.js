@@ -29,6 +29,7 @@ export function Header({searchField}) {
 
 function Profile() {
   const [user, setUser] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(()=> {
     async function validateUser(){
@@ -43,7 +44,20 @@ function Profile() {
   }, [])
 
   return (
-    user ? <div id="profile">{user.username}</div> :
+    user ? <div id="profile">
+        {user.username}
+        <button id="signup" className="logButtons"
+          onClick={async () => {
+            const response = await fetch('http://localhost:4000/api/v1/auth/logout', {
+              credentials: 'include'
+            })
+            if (response.status == 200)
+              navigate('/login', {replace: true})
+          }}
+        >
+          Logout
+        </button>
+      </div> :
     <div id="profile">
       <Link to='/login'>
         <button id="login" className="logButtons">login</button>
