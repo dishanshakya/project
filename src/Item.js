@@ -122,7 +122,7 @@ function Comment({comment}) {
     return (
         <div id='comment'>
             <div id='profileimage' className='img-holder'>
-                <img src='/images/popcat.jpg' style={{height: '30px', width: 'auto'}}></img>
+                <img src={comment.profile_pic_src} style={{height: '30px', width: 'auto'}}></img>
             </div>
             <div id='text'>
                 <div id='userid'>{comment.username}</div>
@@ -131,10 +131,11 @@ function Comment({comment}) {
                     <div style={{fontSize: '10px', color: 'grey', marginRight: '10px'}}>
                         {ago(Date.now()-Date.parse(comment.date))}
                     </div>
+                    {!comment.reply_id ? 
                     <img src='/images/reply.png' 
                         style={{height: '15px', width: 'auto', cursor: 'pointer'}} 
                         onClick={()=> setReplybox(!replybox)}
-                    />
+                    /> : '' }
                     {comment.replies ? 
                     <div onClick={async ()=> {
                         const response = await fetch(`http://localhost:4000/api/v1/order/replies/${comment.comment_id}`)

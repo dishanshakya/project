@@ -5,6 +5,7 @@ import { useState } from 'react'
 export default function SearchPage() {
     const data = useLoaderData()
     const [orders, setOrders] = useState(data.orders)
+    console.log(orders)
     const [searchParams, setSearchParams] = useSearchParams()
     return (
         <div id='homepage'>

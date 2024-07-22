@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 
 function Homepage() {
@@ -30,6 +30,8 @@ export function Header({searchField}) {
 function Profile() {
   const [user, setUser] = useState(null)
   const navigate = useNavigate()
+  const [popupDisplay, setPopupDisplay] = useState(0)
+  const popup = useRef()
 
   useEffect(()=> {
     async function validateUser(){
@@ -44,9 +46,19 @@ function Profile() {
   }, [])
 
   return (
-    user ? <div id="profile">
-        {user.username}
-        <button id="signup" className="logButtons"
+    user ? <div id="profile"
+      onClick={()=> {
+        if (!popupDisplay){
+          popup.current.style.display = 'block'
+        }
+        else popup.current.style.display = 'none'
+        setPopupDisplay(!popupDisplay)
+      }}
+    >
+      <div id="popup" ref={popup}>
+        <Link to='/change-picture' className="popupitem " id="cpp">Change Picture</Link>
+        <Link to='/change-password' className="popupitem" id="cpw">Change Password</Link>
+        <div id="logout" className="popupitem"
           onClick={async () => {
             const response = await fetch('http://localhost:4000/api/v1/auth/logout', {
               credentials: 'include'
@@ -56,7 +68,13 @@ function Profile() {
           }}
         >
           Logout
-        </button>
+        </div>
+      </div>
+        <div className="img-holder" style={{height: '40px', width: '40px', borderRadius: '50%',
+         border: '4px solid var(--mygrey)'}}>
+          <img src={user.profile_pic_src} style={{height: '40px', width: 'auto'}}/>
+        </div>
+        <div id="profilename">{user.username}</div>
       </div> :
     <div id="profile">
       <Link to='/login'>

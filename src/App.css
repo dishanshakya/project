@@ -197,6 +197,9 @@ form#search >button:hover {
     display: flex;
     column-gap: 30px;
     align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 200px;
 }
 #profile button {
     height: 40px;
@@ -217,6 +220,18 @@ form#search >button:hover {
     background-color: black;
     color: white;
 }
+
+#popup {
+    display: none;
+    position: absolute;
+    width: 200px;
+    z-index: 9;
+    box-shadow: 1px 1px 4px grey;
+    opacity: 1;
+    top: 100px;
+    background-color: white;
+}
+
 
 #categories > div#categoryHeading {
     height: 40px;

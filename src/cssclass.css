@@ -3,6 +3,12 @@
     align-items: center;
 }
 
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .round-input {
     border: 1px solid var(--mydarkergrey);
     border-radius: 20px;
@@ -21,4 +27,18 @@
     align-items: center;
     justify-content: center;
     overflow: clip;
+}
+
+.popupitem {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 0.5px solid var(--mygrey);
+}
+
+.popupitem:hover {
+    background-color: var(--mygrey);
 }

@@ -57,7 +57,7 @@ export default function PostItem() {
             </label>
             <span id="buy">Buy</span>
             <div id="imageSeller">
-                <ItemImage setFile={setFile}/>
+                <ItemImage setFile={setFile} />
                 <label id="itemPrice">
                     Rs. 
                     <input id="itemPrice" inputMode="numeric" placeholder="Price" value={price}

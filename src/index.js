@@ -4,6 +4,7 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import App from './App';
 import ItemView from './Item';
 import PostItem from './Post';
+import {ChangeProfile, ChangePassword, ChangePicture} from './ChangeProfile';
 import { Login, SignUp } from './Login';
 import './App.css';
 import './Item.css'
@@ -41,6 +42,8 @@ const router = createBrowserRouter(
       ></Route>
       <Route path='/signup' element={<SignUp />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/change-password' element={<ChangePassword />} />
+      <Route path='/change-picture' element={<ChangePicture />} />
       <Route 
         path='/search' 
         element={<SearchPage />}
