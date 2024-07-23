@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import { hostname } from ".";
 
 function Homepage() {
   const data = useLoaderData();
@@ -35,7 +36,7 @@ function Profile() {
 
   useEffect(()=> {
     async function validateUser(){
-      const data = await fetch('http://localhost:4000/api/v1/auth/tokenvalidity', {
+      const data = await fetch(`${hostname}/api/v1/auth/tokenvalidity`, {
         credentials: 'include'
       })
       if (data.status == 200)
@@ -60,7 +61,7 @@ function Profile() {
         <Link to='/change-password' className="popupitem" id="cpw">Change Password</Link>
         <div id="logout" className="popupitem"
           onClick={async () => {
-            const response = await fetch('http://localhost:4000/api/v1/auth/logout', {
+            const response = await fetch(`${hostname}/api/v1/auth/logout`, {
               credentials: 'include'
             })
             if (response.status == 200)

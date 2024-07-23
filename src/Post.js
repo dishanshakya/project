@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { Logo } from "./App";
+import { hostname } from ".";
 
 export default function PostItem() {
     const  data = useLoaderData()
@@ -34,7 +35,7 @@ export default function PostItem() {
                 formdata.append('price', price)
                 formdata.append('category', category)
 
-                const response = await fetch('http://localhost:4000/api/v1/order/postorder', {
+                const response = await fetch(`${hostname}/api/v1/order/postorder`, {
                     method: "POST",
                     body: formdata,
                     credentials: 'include'

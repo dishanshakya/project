@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { hostname } from "."
 
 export function ChangePassword (){
     const [user, setUser] = useState()
@@ -9,7 +10,7 @@ export function ChangePassword (){
 
     useEffect(()=> {
         const check = async ()=> {
-            const response = await fetch('http://localhost:4000/api/v1/auth/tokenvalidity', {
+            const response = await fetch(`${hostname}/api/v1/auth/tokenvalidity`, {
                 credentials: 'include'
             })
             if (response.status == 400)
@@ -22,7 +23,7 @@ export function ChangePassword (){
         <form className="flex-center"
             onSubmit={async (e) => {
                 e.preventDefault()
-                const response = await fetch('http://localhost:4000/api/v1/user/change-password', {
+                const response = await fetch(`${hostname}/api/v1/user/change-password`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     credentials: 'include',
@@ -54,7 +55,7 @@ export function ChangePicture(){
     const [file, setFile] = useState(null)
     useEffect(()=> {
         const check = async ()=> {
-            const response = await fetch('http://localhost:4000/api/v1/auth/tokenvalidity', {
+            const response = await fetch(`${hostname}/api/v1/auth/tokenvalidity`, {
                 credentials: 'include'
             })
             if (response.status == 400)
@@ -69,7 +70,7 @@ export function ChangePicture(){
                 const formdata = new FormData()
                 formdata.append('file', file)
                 e.preventDefault()
-                const response = await fetch('http://localhost:4000/api/v1/user/change-picture', {
+                const response = await fetch(`${hostname}/api/v1/user/change-picture`, {
                     method: 'POST',
                     body: formdata,
                     credentials: 'include'

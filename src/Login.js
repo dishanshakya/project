@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { hostname } from ".";
 
 export function Login() {
     const [passwordValue, setPasswordValue] = useState('');
@@ -19,7 +20,7 @@ export function Login() {
         <div id="LoginPage">
             <form onSubmit={async (event)=> {
                 event.preventDefault()
-                const response = await fetch('http://localhost:4000/api/v1/auth/login', {
+                const response = await fetch(`${hostname}/api/v1/auth/login`, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     credentials: 'include',
@@ -92,7 +93,7 @@ export function SignUp() {
         <div id="LoginPage">
             <form id="signup" onSubmit={async (e) => {
                 e.preventDefault()
-                const response = await fetch('http://localhost:4000/api/v1/auth/register', {
+                const response = await fetch(`${hostname}/api/v1/auth/register`, {
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                     credentials: 'include',

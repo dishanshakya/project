@@ -13,16 +13,20 @@ import './cssclass.css'
 import { ErrorPage } from './ErrorPage';
 import SearchPage from './Search'
 
+export const hostname = process.env.REACT_APP_HOSTNAME
+
+console.log(process.env)
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path='/' 
         loader={async ()=> {
-          const response = await fetch('http://localhost:4000/api/v1/order/recentorders', {
+          const response = await fetch(`${hostname}/api/v1/order/recentorders`, {
             credentials: 'include'
           })
-          const categories  = await fetch('http://localhost:4000/api/v1/order/categories', {
+          const categories  = await fetch(`${hostname}/api/v1/order/categories`, {
             credentials: 'include'
           })
           return {recentorders: await response.json(), categories: await categories.json()};
@@ -30,8 +34,8 @@ const router = createBrowserRouter(
         element={<App />} />
       <Route path='/post' element={<PostItem />}
         loader={async () => {
-          const response = await fetch('http://localhost:4000/api/v1/order/categories')
-          const user = await fetch('http://localhost:4000/api/v1/auth/tokenvalidity', {
+          const response = await fetch(`${hostname}/api/v1/order/categories`)
+          const user = await fetch(`${hostname}/api/v1/auth/tokenvalidity`, {
             credentials: 'include'
           })
           return {
@@ -49,8 +53,8 @@ const router = createBrowserRouter(
         element={<SearchPage />}
         loader={async ({request}) => {
           const searchString = new URL(request.url).searchParams.get('name')
-          const categories  = await fetch('http://localhost:4000/api/v1/order/categories')
-          const results = await fetch(`http://localhost:4000/api/v1/order/search`, {
+          const categories  = await fetch(`${hostname}/api/v1/order/categories`)
+          const results = await fetch(`${hostname}/api/v1/order/search`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({search: searchString})
@@ -62,9 +66,9 @@ const router = createBrowserRouter(
         path='/orders/:id' 
         element={<ItemView />}
       loader={async ({params})=> {
-          const response = await fetch(`http://localhost:4000/api/v1/order/${params.id}`)
-          const additional = await fetch(`http://localhost:4000/api/v1/order/similarorders/${params.id}`)
-          const comments = await fetch(`http://localhost:4000/api/v1/order/comments/${params.id}`)
+          const response = await fetch(`${hostname}/api/v1/order/${params.id}`)
+          const additional = await fetch(`${hostname}/api/v1/order/similarorders/${params.id}`)
+          const comments = await fetch(`${hostname}/api/v1/order/comments/${params.id}`)
           return {order: await response.json(), similar: await additional.json(), comments: await comments.json()}
         }}
         errorElement={<ErrorPage />}

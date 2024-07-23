@@ -2,6 +2,7 @@ import { Link, useLoaderData, useNavigate } from 'react-router-dom';
 import {Header, ago} from './App'
 import { useEffect, useState } from 'react';
 import { checkTokenValidity } from './utils';
+import { hostname } from '.';
 
 export default function ItemView() {
     const data = useLoaderData();
@@ -86,7 +87,7 @@ function CommentWriteField({type, parentcomment, order}) {
             }}
             onSubmit={async (e)=> {
                 e.preventDefault()
-                const response = await fetch(`http://localhost:4000/api/v1/order/${type}`, {
+                const response = await fetch(`${hostname}/api/v1/order/${type}`, {
                     method: "POST",
                     credentials: 'include',
                     headers: {"Content-Type": "application/json"},
@@ -138,7 +139,7 @@ function Comment({comment}) {
                     /> : '' }
                     {comment.replies ? 
                     <div onClick={async ()=> {
-                        const response = await fetch(`http://localhost:4000/api/v1/order/replies/${comment.comment_id}`)
+                        const response = await fetch(`${hostname}/api/v1/order/replies/${comment.comment_id}`)
                         const data = await response.json()
                         if (!replies)
                             setReplies(data.map((reply) => <Comment key={reply.reply_id} comment={reply} />))
